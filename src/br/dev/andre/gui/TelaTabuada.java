@@ -1,6 +1,9 @@
 package br.dev.andre.gui;
+import br.dev.andre.model.Tabuada;
 
 import java.awt.Container;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -72,6 +75,13 @@ public class TelaTabuada {
 		buttonLimpar = new JButton();
 		buttonLimpar.setText("Limpar");
 		buttonLimpar.setBounds(130, 140, 100, 30);
+		
+		//Adicionar o Jlist na tela
+		listTabuada = new JList();
+		
+		//criar o ScrollPane
+		scrollTabuada = new JScrollPane(listTabuada);
+		scrollTabuada.setBounds(20, 190, 210, 300);
 		// Adicionando os componentes no painel de conteúdo do Jframe
 		container.add(labelMultiplicando);
 		container.add(textMultiplicando);
@@ -81,6 +91,45 @@ public class TelaTabuada {
 		container.add(textMaxMultiplicador);
 		container.add(buttonCalcular);
 		container.add(buttonLimpar);
+		container.add(scrollTabuada);
+		
+		//Adicionar ouvintes de ação aos botões
+		buttonCalcular.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String multiplicando = textMultiplicando.getText();
+				String MinMultiplicador = textMinMultiplicador.getText();
+				String MaxMultiplicador = textMaxMultiplicador.getText();
+				
+				double multiplicandoDouble = Double.parseDouble(multiplicando);
+				double MaxMultiplicadorDouble = Double.parseDouble(MaxMultiplicador);
+				double MinMultiplicadorDouble = Double.parseDouble(MinMultiplicador);
+
+
+				Tabuada tabuada = new Tabuada();
+				tabuada.setMultiplicando(multiplicandoDouble);
+				tabuada.setMinimoMultiplicador(MinMultiplicadorDouble);
+				tabuada.setMaximoMultiplicador(MaxMultiplicadorDouble);
+				
+				String[] tabuadaResult = tabuada.mostrarTabuada();
+				
+				listTabuada.setListData(tabuadaResult);
+				
+				tabuada.mostrarTabuada();
+			}
+		
+		});
+		buttonLimpar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				textMultiplicando.setText(null);
+				textMinMultiplicador.setText(null);
+				textMaxMultiplicador.setText(null);
+				texttabuadaResult.setText(null);
+			}
+		});
 		// Tornar a tela visível "DEVE!!!" ser a ultima instrução
 		tela.setVisible(true);
 	}
