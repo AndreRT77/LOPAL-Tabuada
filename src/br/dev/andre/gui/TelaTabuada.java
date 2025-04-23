@@ -127,7 +127,8 @@ public class TelaTabuada {
 				textMultiplicando.setText(null);
 				textMinMultiplicador.setText(null);
 				textMaxMultiplicador.setText(null);
-				texttabuadaResult.setText(null);
+				listTabuada.setListData(new String [0]);
+				textMultiplicando.requestFocus();
 			}
 		});
 		// Tornar a tela visível "DEVE!!!" ser a ultima instrução
